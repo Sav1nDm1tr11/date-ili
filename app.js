@@ -1,4 +1,4 @@
-import {validateDateTime,buildMessage,telegramURL,escapePosition} from './logic.js';
+import {validateDateTime,buildMessage,telegramURL,escapePosition,validatePlans} from './logic.js';
 
 const $ = s => document.querySelector(s);
 const dialog = $('#rsvp');
@@ -9,6 +9,7 @@ let opener;
 let draft = '';
 let attempts = 0;
 let lastEscape = 0;
+let lastPosition = 0;
 let toastTimer;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -59,7 +60,10 @@ function evade(event) {
   if(performance.now()-lastEscape<350) return true;
   lastEscape=performance.now();
   const stage=$('#escape-stage');
-  const pos=escapePosition(stage.clientWidth,stage.clientHeight,no.offsetWidth,no.offsetHeight,attempts);
+  const rect=stage.getBoundingClientRect();
+  const pointer={x:event.clientX-rect.left,y:event.clientY-rect.top};
+  const pos=escapePosition(stage.clientWidth,stage.clientHeight,no.offsetWidth,no.offsetHeight,lastPosition,Math.random,pointer);
+  lastPosition=pos.index;
   no.style.left=`${pos.x}px`; no.style.top=`${pos.y}px`;
   $('#joke').textContent=['404: отказ временно переехал.','Это не баг. Это флирт.','Кнопка попросила ещё один раунд правок.','Отрицательный ответ не прошёл арт-дирекшн.','Кнопка в потоке. Не отвлекаем.','Кажется, у нас бесконечный прототип.'][attempts%6];
   $('#toast').textContent=['Кнопка вышла из зоны комфорта ↗','Новый фрейм. Старые чувства.','Ctrl + Z? Тут не работает.','Этот пиксель тебе не поймать.','Кнопка на удалёнке. Очень удалённо.','Бесконечный скролл? Бесконечный «нет».'][attempts%6];
@@ -71,6 +75,7 @@ function evade(event) {
 }
 no.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse') evade(event);});
 no.addEventListener('click',event=>{if(!evade(event)) decline();});
+window.addEventListener('resize',()=>{no.style.left='0px';no.style.top='0px';lastPosition=0;});
 
 const now=new Date();
 $('#date').min=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
@@ -89,7 +94,14 @@ function advance() {
   if(step===1){
     const error=validateDateTime($('#date').value,$('#time').value);
     if(error){showStep(0);$('#date-error').textContent=error;return;}
-    draft=buildMessage(Object.fromEntries(new FormData(form)));
+    const data=new FormData(form);
+    const moods=data.getAll('mood');
+    const customPlan=data.get('customPlan');
+    const planError=validatePlans(moods,customPlan);
+    $('#plan-error').textContent=planError;
+    $('#custom-plan').setAttribute('aria-invalid',String(Boolean(planError)));
+    if(planError){$('#custom-plan').focus();return;}
+    draft=buildMessage({...Object.fromEntries(data),moods,customPlan});
     $('#summary').textContent=draft;
     $('#telegram').href=telegramURL(draft);
     $('#copy-status').textContent='';

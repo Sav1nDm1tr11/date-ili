@@ -11,15 +11,23 @@ export function validateDateTime(date, time, now = new Date()) {
   return '';
 }
 
-export function buildMessage({date, time, mood, notes}) {
+export function validatePlans(moods, customPlan) {
+  return moods.length || customPlan.trim() ? '' : 'Выбери хотя бы один план или предложи свой.';
+}
+
+export function buildMessage({date, time, moods, customPlan, notes}) {
   const [y, m, d] = date.split('-');
-  return `Ужин согласован. Правок нет 😌\n\nИду с тобой в «Или», Литейный, 53.\nКогда: ${d}.${m}.${y} в ${time} (моё местное время).\nПлан: ${mood}.\n${notes.trim() ? `Пожелания: ${notes.trim()}\n` : ''}\nДавай подтвердим время и столик в чате.`;
+  const plans=[...moods,customPlan.trim()].filter(Boolean).join(' + ');
+  return `Ужин согласован. Правок нет 😌\n\nИду с тобой в «Или», Литейный, 53.\nКогда: ${d}.${m}.${y} в ${time} (моё местное время).\nПлан: ${plans}.\n${notes.trim() ? `Пожелания: ${notes.trim()}\n` : ''}\nДавай подтвердим время и столик в чате.`;
 }
 
 export function telegramURL(message) {
   return `https://t.me/${recipient}?text=${encodeURIComponent(message)}`;
 }
 
-export function escapePosition(width, height, buttonWidth, buttonHeight, attempt) {
-  return {x: Math.max(0, width - buttonWidth) * (attempt % 2 ? 0.08 : 0.88), y: Math.max(0, height - buttonHeight) * (attempt % 2 ? 0.9 : 0.8)};
+export function escapePosition(width, height, buttonWidth, buttonHeight, previous=-1, random=Math.random, pointer=null) {
+  const positions=[[0,0],[.5,0],[1,0],[0,1],[.5,1],[1,1]].map(([x,y],index)=>({x:x*Math.max(0,width-buttonWidth),y:y*Math.max(0,height-buttonHeight),index}));
+  const candidates=positions.filter(p=>p.index!==previous && (!pointer || pointer.x<p.x || pointer.x>p.x+buttonWidth || pointer.y<p.y || pointer.y>p.y+buttonHeight));
+  const available=candidates.length ? candidates : positions.filter(p=>p.index!==previous);
+  return available[Math.floor(random()*available.length)];
 }
