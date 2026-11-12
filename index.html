@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#efeee8"><meta name="description" content="Одно личное приглашение. Один хороший вечер. И никаких правок.">
+  <title>ИЛИ — ужин без правок</title>
+  <link rel="icon" href="assets/ili-logo.jpg"><link rel="preload" href="assets/unbounded.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#invitation">К приглашению</a>
+<header class="masthead wrap"><a href="#" class="wordmark" aria-label="В начало">ИЛИ<span>↗</span></a><span class="micro">ЛИЧНОЕ ПРИГЛАШЕНИЕ<br>ТИРАЖ: 1 ШТ.</span><a class="micro top-link" href="#venue">ПЕТЕРБУРГ / ВСТРЕТИМСЯ?</a></header>
+<main>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="eyebrow"><span class="micro">ДЛЯ ОДНОЙ ОЧЕНЬ КЛАССНОЙ ДИЗАЙНЕРШИ</span><span class="micro edition">VOL. 01 — ВНЕ РАБОЧИХ ЧАТОВ</span></div>
+    <h1 id="hero-title">ИЛИ ТЫ ИДЁШЬ<br><span class="second-line">СО МНОЙ, <em>ИЛИ…</em></span></h1>
+    <div class="hero-bottom"><p>Ладно, никакого «или».<br>Просто хочу позвать тебя на ужин.</p><a class="text-link" href="#invitation">У меня есть план <span>↙</span></a></div>
+    <div class="landscape">
+      <img class="coast" src="assets/coast.jpg" alt="Балтийские волны, камни и холодное голубое небо" width="1200" height="680" fetchpriority="high">
+      <div class="photo-shade"></div><p class="photo-title">ПЛАН НА ВЕЧЕР:<br>ВЫЙТИ ИЗ ФИГМЫ.</p>
+      <span class="photo-caption micro">МЕНЬШЕ ПИКСЕЛЕЙ. БОЛЬШЕ НАС.</span>
+      <div class="sticker"><span class="micro">НОВЫЙ ДЕДЛАЙН</span><strong>ПОБЫТЬ<br>ВДВОЁМ ↗</strong></div>
+      <span class="coordinate micro">59.9363° N<br>30.3477° E</span>
+    </div>
+  </section>
+  <div class="ticker" aria-hidden="true"><span>УЖИН БЕЗ ПРАВОК ↗ ХОРОШИЙ ВЕЧЕР В ХОРОШЕЙ КОМПАНИИ ↗ УЖИН БЕЗ ПРАВОК ↗ ХОРОШИЙ ВЕЧЕР В ХОРОШЕЙ КОМПАНИИ ↗</span></div>
+  <section id="venue" class="venue wrap" aria-labelledby="venue-title">
+    <div class="venue-copy"><span class="micro">01 / МЕСТО УЖЕ НАШЛОСЬ</span><h2 id="venue-title">УЖИН. РАЗГОВОРЫ.<br>БЕЗ «ЕЩЁ ОДНОЙ<br>ПРАВКИ».</h2><p>Предлагаю на вечер закрыть вкладки.<br>Открыть меню. И посмотреть друг на друга<br class="desktop-break"> без курсора между нами.</p><div class="venue-id"><img src="assets/ili-logo.jpg" alt="Логотип ресторана Или" width="80" height="80"><div><strong>ИЛИ / ЛИТЕЙНЫЙ, 53</strong><a href="https://yandex.ru/maps/org/ili/26016389944/" target="_blank" rel="noopener noreferrer">Показать место на карте ↗</a></div></div><p class="small-note">Ресторан выбран. Вечер выберем вместе.</p></div>
+    <div class="venue-images"><figure class="food-photo"><img src="assets/ili-table.jpg" alt="Накрытый стол в ресторане Или" loading="lazy" width="687" height="1024"><figcaption class="micro">ХОРОШАЯ КОМПОЗИЦИЯ. СЪЕДОБНАЯ.</figcaption></figure><figure class="room-photo"><img src="assets/ili-room.jpg" alt="Фотография из карточки ресторана Или" loading="lazy" width="680" height="1000"></figure><span class="image-tag">ТЫ + Я<br>+ ЧТО-НИБУДЬ ВКУСНОЕ</span></div>
+  </section>
+  <section id="invitation" class="invite" aria-labelledby="invite-title"><div class="wrap invite-inner"><div><span class="micro">02 / САМЫЙ ВАЖНЫЙ ВОПРОС</span><h2 id="invite-title">НУ ЧТО,<br>ИДЁМ?</h2><p>Обещаю: презентации не будет.<br>Хотя этот сайт уже немного считается.</p></div><div class="answer-area"><span class="annotation">тут очень хочется нажать ↓</span><button id="yes" class="button primary">Да. Это мэтч <span>↗</span></button><div class="escape-stage" id="escape-stage"><button id="no" class="button secondary">Нет, я пиксель</button></div><p id="joke" class="joke" role="status">У кнопки «нет» сложный характер.</p><button id="decline" class="quiet">А если серьёзно — не хочу</button></div></div></section>
+</main>
+<footer class="wrap footer"><span class="wordmark">ИЛИ<span>↗</span></span><span class="micro">СДЕЛАНО С НАМЕРЕНИЕМ<br>ПРИЯТНО ПРОВЕСТИ С ТОБОЙ ВЕЧЕР.</span><a class="micro" href="#">ОБРАТНО НАВЕРХ ↑</a></footer>
+<div class="toast" id="toast" aria-hidden="true"></div>
+<dialog id="rsvp" aria-labelledby="step-title"><div class="dialog-top"><span class="micro" id="step-label">СВИДАНИЕ / ШАГ 01 ИЗ 03</span><button class="close" id="close" aria-label="Закрыть форму">×</button></div><div class="progress" aria-hidden="true"><i></i><i></i><i></i></div>
+  <form id="date-form" novalidate>
+    <section class="step" data-step="0"><h2 id="step-title" tabindex="-1">СВЕРИМ<br>КАЛЕНДАРИ.</h2><p>Когда у тебя есть вечер для нас?</p><label for="date">Дата</label><input id="date" name="date" type="date" required><label for="time">Время</label><input id="time" name="time" type="time" value="19:00" required><p class="field-hint">Твоё местное время. Точное время и столик подтвердим в чате.</p><p class="error" id="date-error" role="alert"></p><button class="button primary next" type="button">Дальше <span>→</span></button></section>
+    <section class="step" data-step="1" hidden><h2 tabindex="-1">КАКОЙ<br>У НАС ВАЙБ?</h2><fieldset><legend>Выбери план на вечер</legend><label class="choice"><input type="radio" name="mood" value="Ужин и бесконечные разговоры" checked><span>Ужин и бесконечные разговоры <b>↗</b></span></label><label class="choice"><input type="radio" name="mood" value="Сначала ужин, потом приключения"><span>А потом немного погулять <b>↗</b></span></label><label class="choice"><input type="radio" name="mood" value="Решим на месте. Я за спонтанность"><span>Решим на месте. Я спонтанная <b>↗</b></span></label></fieldset><label for="notes">Что учесть? <span class="optional">необязательно</span></label><textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="Аллергии, любимая еда или важный райдер…"></textarea><button class="button primary next" type="button">Почти договорились <span>→</span></button><button class="back" type="button">← Назад</button></section>
+    <section class="step" data-step="2" hidden><span class="approval">✓ КОНЦЕПЦИЯ СОГЛАСОВАНА</span><h2 tabindex="-1">ОСТАЛОСЬ<br>НАПИСАТЬ.</h2><p>Вот что отправится в наш чат:</p><div id="summary" class="summary"></div><a class="button primary" id="telegram" target="_blank" rel="noopener noreferrer">Открыть Telegram <span>↗</span></a><p class="field-hint">Откроется чат с @Sav1nDm1tr11. Нажми «Отправить» в Telegram — и я увижу ответ.</p><button id="copy" class="copy" type="button">Скопировать ответ</button><p id="copy-status" role="status" class="field-hint"></p><button class="back" type="button">← Изменить ответы</button></section>
+  </form>
+  <section id="declined" hidden><span class="micro">ОТВЕТ ПРИНЯТ</span><h2 tabindex="-1">БЕЗ<br>ДАВЛЕНИЯ.</h2><p>Спасибо, что сказала прямо.<br>Шутки шутками, а твой ответ важнее.</p><button id="decline-close" class="button primary">Хорошо <span>↗</span></button></section>
+</dialog>
+<noscript><p class="noscript">Для формы включи JavaScript или <a href="https://t.me/Sav1nDm1tr11">напиши мне в Telegram</a>.</p></noscript>
+</body></html>
